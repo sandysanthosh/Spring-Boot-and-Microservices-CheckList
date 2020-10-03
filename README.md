@@ -4,35 +4,35 @@
 
 #### Spring Boot Checklist
 
-  *         Actuator: features to help you monitor and manage your application
+  * Actuator: features to help you monitor and manage your application
 
-  *         JPA: to save/retrieve data
+  * JPA: to save/retrieve data
 
-  *         H2: an in-memory database
+  * H2: an in-memory database
 
-  *         RestRepositories: to expose JPA repositories as REST endpoints
+  * RestRepositories: to expose JPA repositories as REST endpoints
 
-  *         Web: Spring MVC and embedded Tomcat
+  * Web: Spring MVC and embedded Tomcat
 
-  *         DevTools: to auto-reload the application when files change
+  * DevTools: to auto-reload the application when files change
 
-  *         Axios: Promise-based HTTP client for JavaScript.(Test API URL in Front-end)
+  * Axios: Promise-based HTTP client for JavaScript.(Test API URL in Front-end)
 
-  *         Lombok: to reduce boilerplate code
+  * Lombok: to reduce boilerplate code
 
-  *         Hal browser-> to test the screens
+  * Hal browser-> to test the screens
 
-  *         Jaxson parser-> content management-> read data in xml/json
+  * Jaxson parser-> content management-> read data in xml/json
 
-  *         Swagger ui-> springfox-swagger2 -> spring boot documentation
+  * Swagger ui-> springfox-swagger2 -> spring boot documentation
 
-  *         Thymeleaf - > elegient html view
+  * Thymeleaf - > elegient html view
+ 
+  * EurekaDiscovery-> for service registration
 
-  *         EurekaDiscovery-> for service registration
+  * Hystrix -> fault tolerance java library
 
-  *         Hystrix -> fault tolerance java library
-
-  *         Heroku -> Deploy in Cloud Application Platform
+  * Heroku -> Deploy in Cloud Application Platform
 
 
 #### Spring Cloud Microservices:
