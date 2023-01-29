@@ -79,5 +79,35 @@
 
     * Admin processes = Run admin/management tasks as one-off processes
     
-<a href="http://starwalt.in">Follow us on Starwalt.in</a>
+#### Here is a general checklist for creating a Spring Boot application:
+
+ * Create a new project or use an existing one.
+
+ * Add the Spring Boot starter dependencies to the project's build file (Maven or Gradle).
+
+ * Define the application's main class with the @SpringBootApplication annotation.
+
+ * Create or update the application.properties or application.yml configuration file with any necessary settings.
+
+ * Define the application's RESTful controllers with the @RestController annotation and map them to specific URLs using the @RequestMapping annotation.
+
+ * Create any necessary service classes to handle business logic and data access.
+
+ * Create any necessary data model classes with the @Entity annotation.
+
+ * Configure the application to connect to a database using the spring.datasource properties in the application configuration file.
+
+ * Create a repository interface for each of the data model classes to handle database operations.
+
+ * Create a test class for the application and test the application's functionality using JUnit or another testing framework.
+
+ * Build and run the application using the Spring Boot Gradle or Maven plugin, or by running the main class from an IDE.
+
+ * Make sure to handle errors and exceptions properly and return appropriate HTTP status codes.
+
+ * If the application will be deployed to a cloud platform, configure the necessary settings and dependencies for that platform.
+
+ * Use Swagger or another API documentation tool to document the application's API endpoints.
+
+ * Monitor the application's performance and make necessary adjustments to ensure optimal performance and scalability.
 
