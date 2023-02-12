@@ -23,6 +23,8 @@
 
 
 ```
+
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -57,10 +59,46 @@ public class SwaggerConfig {
 }
 
 
+```
+
 Run your Spring Boot application, and navigate to http://localhost:8080/swagger-ui.html to access the Swagger UI.
 
-
-
+3.Annotate your REST controllers with Swagger annotations:
 
 
 ```
+
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@RestController
+@RequestMapping("/api/employees")
+@Api(value="Employee Management System", description="Operations pertaining to employee in Employee Management System")
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeService employeeService;
+
+    @ApiOperation(value = "View a list of available employees", response = List.class)
+    @GetMapping
+    public List<Employee> getAllEmployees() {
+        return employeeService.getAllEmployees();
+    }
+
+    @ApiOperation(value = "Get an employee by ID")
+    @GetMapping("/{id}")
+    public Employee getEmployeeById(
+            @ApiParam(value = "Employee id from which employee object will retrieve", required = true)
+            @PathVariable(value = "id") Long employeeId) {
+        return employeeService.getEmployeeById(employeeId);
+    }
+
+    //...
+
+
+```
+
+
+
