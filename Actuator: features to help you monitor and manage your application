@@ -1,4 +1,7 @@
-Spring Boot Actuator is a set of features in Spring Boot that provides endpoints for monitoring and managing your application. Some of the key features of Spring Boot Actuator include:
+
+Spring Boot Actuator is a set of features in Spring Boot that provides endpoints for monitoring and managing your application.
+
+####Some of the key features of Spring Boot Actuator include:
 
 Health Endpoint: This endpoint returns information about the health of your application, including details about any problems that might be affecting it.
 
