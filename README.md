@@ -22,7 +22,7 @@
 
   * Hal browser-> to test the screens
 
-  * Jaxson parser-> content management-> read data in xml/json
+  * Jaxson parser-> content management-> read data in xml/json -> Object Mapper -> Jackson API
 
   * Swagger ui-> springfox-swagger2 -> spring boot documentation
 
