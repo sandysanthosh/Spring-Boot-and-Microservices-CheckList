@@ -65,6 +65,7 @@ Run your Spring Boot application, and navigate to http://localhost:8080/swagger-
 
 3.Annotate your REST controllers with Swagger annotations:
 
+EmployeeController class that includes Swagger annotations:
 
 ```
 
@@ -72,6 +73,10 @@ Run your Spring Boot application, and navigate to http://localhost:8080/swagger-
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/employees")
@@ -95,10 +100,34 @@ public class EmployeeController {
         return employeeService.getEmployeeById(employeeId);
     }
 
-    //...
+    @ApiOperation(value = "Add an employee")
+    @PostMapping
+    public Employee createEmployee(
+            @ApiParam(value = "Employee object store in database table", required = true)
+            @RequestBody Employee employee) {
+        return employeeService.createEmployee(employee);
+    }
+
+    @ApiOperation(value = "Update an employee")
+    @PutMapping("/{id}")
+    public Employee updateEmployee(
+            @ApiParam(value = "Employee Id to update employee object", required = true)
+            @PathVariable(value = "id") Long employeeId,
+            @ApiParam(value = "Update employee object", required = true)
+            @RequestBody Employee employee) {
+        return employeeService.updateEmployee(employeeId, employee);
+    }
+
+    @ApiOperation(value = "Delete an employee")
+    @DeleteMapping("/{id}")
+    public void deleteEmployee(
+            @ApiParam(value = "Employee Id from which employee object will delete from database table", required = true)
+            @PathVariable(value = "id") Long employeeId) {
+        employeeService.deleteEmployee(employeeId);
+    }
+}
 
 
 ```
-
 
 
