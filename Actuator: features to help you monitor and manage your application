@@ -15,3 +15,34 @@ Mappings Endpoint: This endpoint provides information about the mappings between
 Trace Endpoint: This endpoint provides information about the request and response history for your application.
 
 All of these features can be accessed through a set of RESTful endpoints that are automatically exposed by Spring Boot Actuator when you include it as a dependency in your application. These endpoints can be secured and customized to meet your specific needs.
+
+
+
+```
+
+import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
+import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
+import org.springframework.boot.actuate.endpoint.annotation.WriteOperation;
+import org.springframework.stereotype.Component;
+
+@Component
+@Endpoint(id="custom")
+public class CustomEndpoint {
+
+  private String message = "Hello World";
+
+  @ReadOperation
+  public String getMessage() {
+    return message;
+  }
+
+  @WriteOperation
+  public void setMessage(String message) {
+    this.message = message;
+  }
+}
+
+
+```
+
+
