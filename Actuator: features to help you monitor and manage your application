@@ -1,0 +1,17 @@
+Spring Boot Actuator is a set of features in Spring Boot that provides endpoints for monitoring and managing your application. Some of the key features of Spring Boot Actuator include:
+
+Health Endpoint: This endpoint returns information about the health of your application, including details about any problems that might be affecting it.
+
+Metrics Endpoint: This endpoint provides detailed metrics about your application, including information about memory usage, CPU usage, and more.
+
+Info Endpoint: This endpoint returns information about your application, such as its version, build number, and other relevant details.
+
+Environment Endpoint: This endpoint provides information about the environment in which your application is running, including information about the JVM, system properties, and more.
+
+Beans Endpoint: This endpoint returns information about the beans that have been defined in your application's context.
+
+Mappings Endpoint: This endpoint provides information about the mappings between URLs and the controllers that handle them.
+
+Trace Endpoint: This endpoint provides information about the request and response history for your application.
+
+All of these features can be accessed through a set of RESTful endpoints that are automatically exposed by Spring Boot Actuator when you include it as a dependency in your application. These endpoints can be secured and customized to meet your specific needs.
