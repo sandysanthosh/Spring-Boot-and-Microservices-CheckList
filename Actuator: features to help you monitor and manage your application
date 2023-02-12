@@ -6,7 +6,9 @@ Metrics Endpoint: This endpoint provides detailed metrics about your application
 
 Info Endpoint: This endpoint returns information about your application, such as its version, build number, and other relevant details.
 
-Environment Endpoint: This endpoint provides information about the environment in which your application is running, including information about the JVM, system properties, and more.
+Environment Endpoint: This endpoint provides information about the environment in which your application is running, 
+
+including information about the JVM, system properties, and more.
 
 Beans Endpoint: This endpoint returns information about the beans that have been defined in your application's context.
 
@@ -14,7 +16,9 @@ Mappings Endpoint: This endpoint provides information about the mappings between
 
 Trace Endpoint: This endpoint provides information about the request and response history for your application.
 
-All of these features can be accessed through a set of RESTful endpoints that are automatically exposed by Spring Boot Actuator when you include it as a dependency in your application. These endpoints can be secured and customized to meet your specific needs.
+All of these features can be accessed through a set of RESTful endpoints that are automatically exposed by Spring Boot Actuator 
+
+when you include it as a dependency in your application. These endpoints can be secured and customized to meet your specific needs.
 
 
 
@@ -44,5 +48,25 @@ public class CustomEndpoint {
 
 
 ```
+
+
+This code creates a custom endpoint in your Spring Boot application that can be used to get and set a message. 
+
+The @ReadOperation and @WriteOperation annotations indicate that this endpoint can be used for read and write operations, respectively.
+
+The /actuator/custom endpoint can be used to access this functionality. 
+
+To retrieve the message, you can use a GET request, and to set the message, you can use a POST request with the desired message in the request body.
+
+This is just one example of what you can do with Spring Boot Actuator. 
+
+The Actuator provides a variety of other endpoints that allow you to monitor and manage your application, 
+
+such as /actuator/health to check the health of your application, 
+
+and /actuator/info to retrieve information about your application.
+
+
+
 
 
