@@ -1,66 +1,28 @@
 Sure, here are some coding interview questions that might be asked in a Java Spring Boot interview at PayPal or a similar company:
 
-##### 1.1	Spring Boot Basics:
+##### 1.1   Spring Boot Basics:
 
-•	Explain the fundamental principles of Spring Boot and its advantages over traditional Spring framework.
+##### 2.1   Dependency Injection in Spring:
 
-•	How does Spring Boot simplify the development of Java applications?
+##### 3.1   RESTful APIs with Spring Boot:
 
-##### 2.1	Dependency Injection in Spring:
+##### 4.1   Database Operations in Spring Boot:
 
-•	What is dependency injection, and how is it achieved in Spring framework?
+##### 5.1   Spring Security:
 
-•	Explain the various types of dependency injection supported by Spring.
+##### 6.1   Error Handling and Exception Management:
 
-##### 3.1	RESTful APIs with Spring Boot:
+##### 7.1   Testing in Spring Boot:
 
-•	How do you create a RESTful API using Spring Boot?
+##### 8.1   Microservices and Spring Boot:
 
-•	What annotations are commonly used in Spring Boot for handling HTTP requests?
-
-##### 4.1	Database Operations in Spring Boot:
-
-•	Implement CRUD operations using Spring Data JPA.
-
-•	Explain the concept of JPA repositories in Spring Boot.
-
-##### 5.1	Spring Security:
-
-•	How do you implement authentication and authorization in a Spring Boot application?
-
-•	Discuss different authentication mechanisms supported by Spring Security.
-
-##### 6.1	Error Handling and Exception Management:
-
-•	Explain how exceptions are handled in Spring Boot.
-
-•	Implement a custom exception handler in a Spring Boot application.
-
-##### 7.1 Testing in Spring Boot:
-
-•	How do you perform unit testing and integration testing in a Spring Boot application?
-
-•	Write a sample unit test for a Spring Boot controller.
-
-##### 8.1	Microservices and Spring Boot:
-
-•	What is a microservice architecture, and how does Spring Boot support it?
-
-•	Discuss the challenges of implementing and managing microservices.
-
-##### 9.1 Performance Optimization and Monitoring:
-
-•	How can you optimize the performance of a Spring Boot application?
-
-•	What tools or techniques can be used for monitoring and managing the performance of a Spring Boot application in production?
+##### 9.1   Performance Optimization and Monitoring:
 
 ##### 10.1	Concurrency and Asynchronous Processing:
 
-•	How does Spring Boot handle asynchronous processing?
-
-•	Discuss the mechanisms provided by Spring Boot for managing concurrency.
-
 ##### 11.1	Pagination
+
+##### 12.1	Spring Boot Annotations
 
 ##### 13.1	Spring Boot AOP
 
