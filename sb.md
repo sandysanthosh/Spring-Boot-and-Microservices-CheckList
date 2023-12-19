@@ -144,3 +144,85 @@ Spring supports two main types of dependency injection:
 Spring also supports **Field Injection** where dependencies are injected directly into class fields. However, this approach is generally discouraged due to reduced testability and issues with encapsulation.
 
 To summarize, Spring supports Constructor Injection, Setter Injection, and Field Injection as methods for achieving dependency injection, allowing developers to choose the most appropriate method based on their application design and requirements.
+
+### Creating RESTful APIs with Spring Boot involves defining endpoints that respond to HTTP requests. Spring Boot simplifies this process by providing annotations from the `org.springframework.web.bind.annotation` package to handle various HTTP methods and map them to corresponding controller methods.
+
+Here are the commonly used annotations in Spring Boot for handling HTTP requests:
+
+1. **@RestController**:
+   - This annotation is used at the class level to define a controller that handles incoming HTTP requests and returns the response directly in the format requested (JSON, XML, etc.).
+   - Example:
+   ```java
+   @RestController
+   public class MyRestController {
+       // Controller methods
+   }
+   ```
+
+2. **@RequestMapping**:
+   - This annotation is used at the method level to map HTTP requests to specific controller methods.
+   - It allows you to specify the URL path and HTTP method for which the method will handle the request.
+   - Example:
+   ```java
+   @RestController
+   public class MyRestController {
+       @RequestMapping(value = "/api/resource", method = RequestMethod.GET)
+       public ResponseEntity<String> getResource() {
+           // Method implementation
+       }
+   }
+   ```
+
+3. **@GetMapping, @PostMapping, @PutMapping, @DeleteMapping**:
+   - These annotations are shortcuts for mapping specific HTTP methods: GET, POST, PUT, DELETE, respectively.
+   - They are more concise alternatives to @RequestMapping for specific HTTP methods.
+   - Example:
+   ```java
+   @RestController
+   public class MyRestController {
+       @GetMapping("/api/resource")
+       public ResponseEntity<String> getResource() {
+           // GET method implementation
+       }
+
+       @PostMapping("/api/resource")
+       public ResponseEntity<String> createResource(@RequestBody Resource resource) {
+           // POST method implementation
+       }
+
+       @PutMapping("/api/resource/{id}")
+       public ResponseEntity<String> updateResource(@PathVariable Long id, @RequestBody Resource resource) {
+           // PUT method implementation
+       }
+
+       @DeleteMapping("/api/resource/{id}")
+       public ResponseEntity<String> deleteResource(@PathVariable Long id) {
+           // DELETE method implementation
+       }
+   }
+   ```
+
+4. **@PathVariable**:
+   - This annotation is used to extract values from the URI path and map them to method parameters.
+   - It is commonly used to capture dynamic parts of the URL.
+   - Example:
+   ```java
+   @GetMapping("/api/resource/{id}")
+   public ResponseEntity<String> getResourceById(@PathVariable Long id) {
+       // Method implementation using the 'id' path variable
+   }
+   ```
+
+5. **@RequestBody**:
+   - This annotation is used to bind the HTTP request body to a method parameter.
+   - It is commonly used to handle incoming data in POST or PUT requests.
+   - Example:
+   ```java
+   @PostMapping("/api/resource")
+   public ResponseEntity<String> createResource(@RequestBody Resource resource) {
+       // Method implementation using the 'resource' from the request body
+   }
+   ```
+
+These annotations, combined with proper method implementations, help in creating well-defined RESTful APIs using Spring Boot by mapping HTTP requests to appropriate controller methods and handling the request and response data effectively.
+
