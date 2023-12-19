@@ -954,6 +954,69 @@ Example: `/products?page=0&size=20` retrieves the first page with 20 items per p
 
 This setup demonstrates a basic implementation of pagination in a Spring Boot application using Spring Data. You can further customize the pagination by adding sorting, filtering, or custom query methods in the repository as needed.
 
+### 12.1 Spring Boot relies on several annotations that simplify the development of applications and configure various aspects of the application's behavior. Here are some commonly used annotations in Spring Boot:
+
+### Core Annotations:
+
+1. **`@SpringBootApplication`**: Main annotation that marks the entry point of a Spring Boot application. It combines `@Configuration`, `@EnableAutoConfiguration`, and `@ComponentScan` annotations.
+
+2. **`@Controller`**, **`@RestController`**: Used to define controller classes in MVC applications. `@RestController` combines `@Controller` and `@ResponseBody`.
+
+3. **`@Service`**: Marks a class as a service component in the business logic layer.
+
+4. **`@Repository`**: Indicates that a class is a repository component, typically used for database interactions.
+
+5. **`@Component`**: A generic stereotype annotation for any Spring-managed component.
+
+6. **`@Configuration`**: Identifies a class as a source of bean definitions for the application context.
+
+7. **`@Autowired`**: Used for automatic dependency injection.
+
+### RESTful Web Annotations:
+
+1. **`@RequestMapping`**: Maps HTTP requests to handler methods in controller classes.
+
+2. **`@GetMapping`**, **`@PostMapping`**, **`@PutMapping`**, **`@DeleteMapping`**: Shortcut annotations for `@RequestMapping` with specific HTTP methods.
+
+3. **`@PathVariable`**: Extracts values from the URI for use in the method parameters.
+
+4. **`@RequestParam`**: Binds HTTP request parameters to method parameters in controller methods.
+
+### Data Access Annotations:
+
+1. **`@Entity`**: Marks a class as an entity for use with JPA (Java Persistence API) in data models.
+
+2. **`@Repository`**, **`@Transactional`**: Used in the data access layer for database operations. `@Transactional` provides transactional behavior to methods.
+
+3. **`@Query`**: Allows defining custom queries in Spring Data repositories.
+
+### Testing Annotations:
+
+1. **`@RunWith(SpringRunner.class)`**: Runs JUnit tests in the Spring context.
+
+2. **`@SpringBootTest`**: Loads the entire Spring application context for integration testing.
+
+3. **`@MockBean`**, **`@SpyBean`**: Used in unit testing to mock or spy beans.
+
+### Security Annotations:
+
+1. **`@EnableWebSecurity`**: Enables Spring Security in the application.
+
+2. **`@Secured`**, **`@PreAuthorize`**, **`@PostAuthorize`**: Used for method-level security based on roles or expressions.
+
+### Other Common Annotations:
+
+1. **`@Value`**: Injects values from properties files into fields.
+
+2. **`@ConditionalOnProperty`**: Conditionally configures beans based on the existence of specified properties.
+
+3. **`@Async`**: Marks methods as asynchronous.
+
+4. **`@Scheduled`**: Allows methods to be executed periodically.
+
+These annotations are integral to Spring Boot development, providing a declarative way to configure the application, manage dependencies, define endpoints, interact with databases, handle security, and more. They simplify development and allow for better organization and control over the application's behavior.
+
+
 ### 13.1 Aspect-Oriented Programming (AOP) in Spring Boot allows you to modularize cross-cutting concerns in your application. Cross-cutting concerns are aspects of your application that affect multiple modules, such as logging, security, transaction management, and performance monitoring. AOP enables you to encapsulate these concerns and apply them declaratively to the application.
 
 Here's an overview of using AOP in a Spring Boot application:
