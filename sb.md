@@ -62,6 +62,14 @@ Sure, here are some coding interview questions that might be asked in a Java Spr
 
 ##### 11.1	Pagination
 
+##### 13.1	Spring Boot AOP
+
+##### 14.1	Spring Boot Scheduler
+
+##### 15.1	Spring Boot Transaction
+
+##### 16.1	Spring Boot Cloud
+
 Remember, in addition to technical questions, you might also be asked about your problem-solving approach, design patterns, software architecture, and real-world application of the concepts in Java Spring Boot. Prepare by reviewing your project experiences, understanding the core concepts deeply, and practicing coding exercises related to Spring Boot.
 
 
@@ -1044,3 +1052,265 @@ Aspects are applied automatically by Spring when the application starts up. You 
 - Aspects can have different advice types such as `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, etc., defining different actions before, after, or around the join points.
 
 Ensure that the aspect classes are properly annotated (`@Aspect`) and are scanned by Spring component scanning in your Spring Boot application for AOP to work correctly.
+
+### 14.1 In Spring Boot, you can schedule tasks using the `@Scheduled` annotation along with the `@EnableScheduling` annotation on a configuration class or main application class. This allows you to execute methods at specific intervals or fixed rates.
+
+Here's a step-by-step guide on how to create a scheduled task in a Spring Boot application:
+
+### 1. Enable Scheduling:
+
+Ensure that scheduling is enabled in your Spring Boot application. You can do this by adding the `@EnableScheduling` annotation to your main application class or any configuration class.
+
+Example:
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableScheduling;
+
+@SpringBootApplication
+@EnableScheduling
+public class YourSpringBootApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(YourSpringBootApplication.class, args);
+    }
+}
+```
+
+### 2. Create Scheduled Tasks:
+
+Use the `@Scheduled` annotation on methods that you want to schedule. These methods should perform the tasks you want to execute at specific intervals.
+
+Example:
+
+```java
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+@Component
+public class ScheduledTasks {
+
+    // Execute this method every 5 seconds
+    @Scheduled(fixedRate = 5000)
+    public void taskToRunEvery5Seconds() {
+        // Your task logic here
+        System.out.println("Task executed every 5 seconds");
+    }
+
+    // Execute this method at a specific time (e.g., every day at 10 AM)
+    @Scheduled(cron = "0 0 10 * * ?")
+    public void taskToRunAtSpecificTime() {
+        // Your task logic here
+        System.out.println("Task executed at 10 AM daily");
+    }
+}
+```
+
+### Explanation:
+
+- `@Scheduled` annotation is used to schedule the execution of methods.
+- `fixedRate` attribute specifies the interval between method invocations in milliseconds.
+- `cron` attribute allows more complex scheduling using a cron expression (e.g., `0 0 10 * * ?` means every day at 10 AM).
+
+### Notes:
+
+- Make sure the class containing the scheduled methods is a Spring-managed component (annotated with `@Component`, `@Service`, `@Controller`, etc.) to be picked up by component scanning.
+- Scheduled tasks can be configured with various attributes like `fixedDelay`, `initialDelay`, `cron`, `zone`, etc., to customize their execution behavior.
+
+Ensure that the application is running continuously for scheduled tasks to execute. These scheduled tasks will be executed by Spring's scheduler according to the specified configurations.
+
+### 15.1 Implementing transactions in a Spring Boot application involves utilizing Spring's `@Transactional` annotation along with appropriate configuration. Here's a step-by-step guide demonstrating various aspects of transaction management in Spring Boot:
+
+### 1. Enable Transaction Management:
+
+Ensure that transaction management is enabled in your Spring Boot application by adding `@EnableTransactionManagement` to your configuration class or main application class.
+
+Example:
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
+
+@SpringBootApplication
+@EnableTransactionManagement
+public class YourSpringBootApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(YourSpringBootApplication.class, args);
+    }
+}
+```
+
+### 2. Transactional Methods:
+
+Annotate your service methods or DAO methods with `@Transactional` to define transactional behavior.
+
+#### Example:
+
+```java
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class YourService {
+
+    @Autowired
+    private YourRepository yourRepository;
+
+    @Transactional
+    public void performTransactionalOperation() {
+        // Your transactional logic here
+        yourRepository.save(entity);
+        // Other operations within the transaction
+    }
+}
+```
+
+### 3. Transactional Attributes and Configuration:
+
+Customize transactional behavior using various attributes of the `@Transactional` annotation.
+
+#### Example with Attributes:
+
+```java
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+
+@Service
+public class YourService {
+
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED, timeout = 60)
+    public void performTransactionalOperation() {
+        // Your transactional logic here
+    }
+}
+```
+
+### 4. Transaction Propagation:
+
+Define how transactions should propagate when multiple methods are involved.
+
+#### Example of Transaction Propagation:
+
+```java
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.annotation.Propagation;
+
+@Service
+public class YourService {
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void methodA() {
+        // Calls methodB() which participates in the same transaction
+        methodB();
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void methodB() {
+        // Your transactional logic here
+    }
+}
+```
+
+### 5. Rollback Rules:
+
+Define rules for rolling back transactions based on specific exceptions.
+
+#### Example of Rollback Rules:
+
+```java
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+@Service
+public class YourService {
+
+    @Transactional(rollbackFor = {CustomException.class, AnotherException.class})
+    public void performTransactionalOperation() throws CustomException {
+        // Your transactional logic here
+        if (someCondition) {
+            throw new CustomException("Rollback transaction");
+        }
+    }
+}
+```
+
+### Notes:
+
+- `@Transactional` annotation is used for declarative transaction management.
+- Configure attributes like `isolation`, `propagation`, `timeout`, `rollbackFor`, etc., to customize transaction behavior.
+- The `@Transactional` annotation can be applied at the method level or class level (applies to all methods within the class).
+- Ensure that your Spring Boot application is correctly configured with the appropriate data source and transaction manager.
+
+These examples illustrate different aspects of transaction management in Spring Boot, allowing you to control transactions at the method level and customize their behavior as needed for your application's requirements.
+
+### 16.1 Implementing various components of Spring Cloud in a Spring Boot application allows you to build distributed systems and microservices architectures. Spring Cloud provides a suite of tools and frameworks for creating resilient, scalable, and cloud-native applications. Here's an overview of various Spring Cloud components and their implementations:
+
+### 1. Service Registration and Discovery (Eureka or Consul):
+
+#### Eureka Implementation:
+- Include the Eureka server dependency and annotate your main class with `@EnableEurekaServer`.
+- Service instances register themselves with Eureka, and clients use Eureka to discover services.
+- Example: [Spring Cloud Netflix Eureka](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-eureka-server.html)
+
+#### Consul Implementation:
+- Use Consul as a service registry and discovery server.
+- Register services with Consul and discover them using Consul clients.
+- Example: [Spring Cloud Consul](https://cloud.spring.io/spring-cloud-consul/reference/html/)
+
+### 2. API Gateway (Spring Cloud Gateway or Netflix Zuul):
+
+#### Spring Cloud Gateway Implementation:
+- Spring Cloud Gateway offers a powerful and flexible way to route and filter requests.
+- Configure routes, filters, and predicates to control the traffic flow.
+- Example: [Spring Cloud Gateway](https://spring.io/projects/spring-cloud-gateway)
+
+#### Netflix Zuul Implementation:
+- Zuul acts as an API gateway and handles routing, filtering, and load balancing.
+- Define routes and filters to handle incoming requests.
+- Example: [Spring Cloud Netflix Zuul](https://cloud.spring.io/spring-cloud-netflix/multi/multi__router_and_filter_zuul.html)
+
+### 3. Distributed Configuration Management (Spring Cloud Config):
+
+#### Spring Cloud Config Implementation:
+- Store and manage configuration properties in a centralized server (Git, SVN, Filesystem, etc.).
+- Clients fetch configurations dynamically from the server.
+- Example: [Spring Cloud Config](https://spring.io/projects/spring-cloud-config)
+
+### 4. Load Balancing and Resilience (Ribbon and Hystrix):
+
+#### Ribbon Implementation:
+- Ribbon provides client-side load balancing for microservices.
+- Automatically balances client requests across multiple service instances.
+- Example: [Spring Cloud Netflix Ribbon](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-ribbon.html)
+
+#### Hystrix Implementation:
+- Hystrix offers circuit breakers and fault tolerance for distributed systems.
+- Protects against cascading failures and provides fallback mechanisms.
+- Example: [Spring Cloud Netflix Hystrix](https://cloud.spring.io/spring-cloud-netflix/multi/multi_spring-cloud-hystrix.html)
+
+### 5. Messaging and Event-Driven Microservices (Spring Cloud Stream):
+
+#### Spring Cloud Stream Implementation:
+- Simplifies event-driven microservices by providing abstractions over messaging middleware (Kafka, RabbitMQ, etc.).
+- Applications can produce and consume events using bindings.
+- Example: [Spring Cloud Stream](https://spring.io/projects/spring-cloud-stream)
+
+### 6. Tracing and Monitoring (Spring Cloud Sleuth and Zipkin):
+
+#### Spring Cloud Sleuth Implementation:
+- Sleuth provides distributed tracing by assigning unique IDs to requests across microservices.
+- Integrates with Zipkin for distributed tracing visualization.
+- Example: [Spring Cloud Sleuth](https://spring.io/projects/spring-cloud-sleuth)
+
+#### Zipkin Implementation:
+- Zipkin is a distributed tracing system used to gather and visualize trace data.
+- Monitors and troubleshoots latency issues in microservices architectures.
+- Example: [Zipkin Distributed Tracing](https://zipkin.io/pages/quickstart.html)
+
+Each component of Spring Cloud plays a specific role in building robust, scalable, and resilient microservices architectures. Depending on your application's requirements, you can selectively use these components to implement specific functionalities in your Spring Boot applications.
