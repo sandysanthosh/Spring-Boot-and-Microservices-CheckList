@@ -63,7 +63,9 @@ Sure, here are some coding interview questions that might be asked in a Java Spr
 Remember, in addition to technical questions, you might also be asked about your problem-solving approach, design patterns, software architecture, and real-world application of the concepts in Java Spring Boot. Prepare by reviewing your project experiences, understanding the core concepts deeply, and practicing coding exercises related to Spring Boot.
 
 
-Spring Boot is a framework built on top of the Spring framework that simplifies the process of creating and deploying production-ready applications quickly. It embodies several fundamental principles that make it advantageous compared to the traditional Spring framework:
+# ANSWER:
+
+### 1. Spring Boot is a framework built on top of the Spring framework that simplifies the process of creating and deploying production-ready applications quickly. It embodies several fundamental principles that make it advantageous compared to the traditional Spring framework:
 
 1. **Opinionated Defaults**: Spring Boot provides default configurations and sensible project structures, reducing the need for developers to configure settings manually. It follows the convention over configuration principle, allowing rapid development by minimizing boilerplate code.
 
@@ -81,4 +83,64 @@ Spring Boot is a framework built on top of the Spring framework that simplifies 
 
 8. **Actuators and Monitoring**: Spring Boot Actuator provides built-in endpoints to monitor and manage applications easily. It offers metrics, health checks, and other useful information about the application, facilitating better monitoring and troubleshooting.
 
-In summary, Spring Boot simplifies the development, configuration, and deployment of Spring applications by providing a streamlined approach with defaults and auto-configuration, making it particularly advantageous for rapid development and microservices-based architectures compared to the more traditional Spring framework.
+
+
+### 2. **Dependency Injection (DI)** is a design pattern used to achieve loose coupling between classes and their dependencies. In DI, rather than a class creating its dependencies directly, the dependencies are provided ("injected") into the class from an external source. This approach makes classes more reusable, testable, and easier to maintain, as it promotes flexibility and allows easier swapping of dependencies.
+
+In the Spring framework, dependency injection is achieved mainly through **Inversion of Control (IoC)**. IoC is the principle where the control over object creation and management is inverted from the application code to a container or framework. The Spring IoC container manages the creation and lifecycle of objects (beans) and injects dependencies into the classes.
+
+Spring supports two main types of dependency injection:
+
+1. **Constructor Injection**:
+   - In constructor injection, dependencies are injected through a class constructor.
+   - Spring container identifies the dependencies required by a class and injects them through the constructor at the time of bean creation.
+   - Example:
+   ```java
+   public class MyClass {
+       private final MyDependency dependency;
+
+       public MyClass(MyDependency dependency) {
+           this.dependency = dependency;
+       }
+
+       // Other class methods
+   }
+   ```
+   - Configuration in Spring:
+   ```xml
+   <beans>
+       <bean id="dependencyBean" class="com.example.MyDependency" />
+       <bean id="myClassBean" class="com.example.MyClass">
+           <constructor-arg ref="dependencyBean" />
+       </bean>
+   </beans>
+   ```
+
+2. **Setter Injection**:
+   - In setter injection, dependencies are injected using setter methods.
+   - Spring container uses JavaBean-style setter methods to inject dependencies into the class after the bean is instantiated.
+   - Example:
+   ```java
+   public class MyClass {
+       private MyDependency dependency;
+
+       public void setDependency(MyDependency dependency) {
+           this.dependency = dependency;
+       }
+
+       // Other class methods
+   }
+   ```
+   - Configuration in Spring:
+   ```xml
+   <beans>
+       <bean id="dependencyBean" class="com.example.MyDependency" />
+       <bean id="myClassBean" class="com.example.MyClass">
+           <property name="dependency" ref="dependencyBean" />
+       </bean>
+   </beans>
+   ```
+
+Spring also supports **Field Injection** where dependencies are injected directly into class fields. However, this approach is generally discouraged due to reduced testability and issues with encapsulation.
+
+To summarize, Spring supports Constructor Injection, Setter Injection, and Field Injection as methods for achieving dependency injection, allowing developers to choose the most appropriate method based on their application design and requirements.
