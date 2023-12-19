@@ -781,7 +781,7 @@ public class AsyncConfig {
 }
 ```
 
-### Mechanisms for Managing Concurrency in Spring Boot:
+### 10.1 Mechanisms for Managing Concurrency in Spring Boot:
 
 **1. Thread Pool Management:**
    - Spring Boot allows configuring and managing thread pools through `TaskExecutor` implementations, controlling the number of threads available for asynchronous tasks.
