@@ -799,6 +799,120 @@ public class AsyncConfig {
 By utilizing these mechanisms, Spring Boot facilitates efficient management of asynchronous processing and concurrent tasks, enabling developers to build responsive, scalable applications that effectively handle concurrent operations without compromising performance.
 
 
+Certainly! Here's an example that demonstrates asynchronous processing in a Spring Boot application using the `@Async` annotation and custom configuration for `TaskExecutor`.
+
+Firstly, you need to have a Spring Boot application set up. Then, follow these steps:
+
+### Step 1: Create a Spring Boot Application
+
+```java
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.scheduling.annotation.EnableAsync;
+
+@SpringBootApplication
+@EnableAsync
+public class AsyncProcessingApplication {
+
+    public static void main(String[] args) {
+        SpringApplication.run(AsyncProcessingApplication.class, args);
+    }
+}
+```
+
+### Step 2: Create an Asynchronous Service
+
+Create a service class with a method that performs an asynchronous task.
+
+```java
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Service;
+
+@Service
+public class MyAsyncService {
+
+    @Async
+    public void performAsyncTask() {
+        // Simulating an asynchronous task
+        for (int i = 0; i < 5; i++) {
+            System.out.println("Async Task Executed: " + i);
+            try {
+                Thread.sleep(1000); // Simulate some work
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        }
+        System.out.println("Async Task Completed!");
+    }
+}
+```
+
+### Step 3: Configure a TaskExecutor
+
+Create a configuration class to define a custom `TaskExecutor`.
+
+```java
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+
+import java.util.concurrent.Executor;
+
+@Configuration
+@EnableAsync
+public class AsyncConfig {
+
+    @Bean(name = "asyncExecutor")
+    public Executor asyncExecutor() {
+        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
+        executor.setCorePoolSize(5);
+        executor.setMaxPoolSize(10);
+        executor.setQueueCapacity(20);
+        executor.setThreadNamePrefix("Async-");
+        executor.initialize();
+        return executor;
+    }
+}
+```
+
+### Step 4: Controller to Trigger Asynchronous Task
+
+Create a controller to trigger the asynchronous task.
+
+```java
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class AsyncController {
+
+    private final MyAsyncService asyncService;
+
+    @Autowired
+    public AsyncController(MyAsyncService asyncService) {
+        this.asyncService = asyncService;
+    }
+
+    @GetMapping("/trigger")
+    public String triggerAsyncTask() {
+        asyncService.performAsyncTask();
+        return "Async Task Triggered!";
+    }
+}
+```
+
+### Notes:
+- `@EnableAsync` enables Spring's asynchronous processing support in the application.
+- The `MyAsyncService` class contains a method annotated with `@Async` that simulates an asynchronous task.
+- `AsyncConfig` provides a custom `TaskExecutor` bean configuration for managing asynchronous tasks.
+- `AsyncController` is a simple REST controller with an endpoint (`/trigger`) that triggers the asynchronous task when accessed.
+
+Remember to configure the dependencies in your `pom.xml` (if using Maven) or `build.gradle` (if using Gradle) to include the necessary Spring Boot dependencies and annotations for asynchronous processing (`spring-boot-starter-web`, `spring-boot-starter-async`, etc.).
+
+
+
 
 
 
