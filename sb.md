@@ -544,5 +544,113 @@ Here's a step-by-step guide on implementing a custom exception handler in a Spri
 
 This setup will ensure that when a specific exception is thrown from your controller methods, it gets intercepted by the corresponding exception handler method in the `GlobalExceptionHandler` class, providing a consistent and controlled way to handle exceptions across your Spring Boot application.
 
+### 7.1 In Spring Boot applications, testing is an essential part of ensuring the functionality and reliability of the codebase. Testing can be broadly categorized into unit testing and integration testing.
+
+### Unit Testing in Spring Boot:
+
+**1. How to perform unit testing:**
+
+Unit testing in Spring Boot involves testing individual units or components of your application in isolation to verify that they work as expected. In Spring Boot, you can perform unit testing using testing frameworks like JUnit and Mockito. Unit tests should focus on testing individual methods, classes, or components without relying on external dependencies.
+
+**2. Sample Unit Test for a Spring Boot Controller:**
+
+Assuming you have a simple Spring Boot controller:
+
+```java
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class SampleController {
+
+    @GetMapping("/hello")
+    public String hello() {
+        return "Hello, World!";
+    }
+}
+```
+
+Here's an example of a unit test for this controller using JUnit and Mockito:
+
+```java
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.MockitoAnnotations;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.hamcrest.Matchers.equalTo;
+
+public class SampleControllerTest {
+
+    @InjectMocks
+    private SampleController sampleController;
+
+    private MockMvc mockMvc;
+
+    public void setup() {
+        MockitoAnnotations.initMocks(this);
+        mockMvc = MockMvcBuilders.standaloneSetup(sampleController).build();
+    }
+
+    @Test
+    public void testHelloEndpoint() throws Exception {
+        mockMvc.perform(get("/hello"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("Hello, World!")));
+    }
+}
+```
+
+Explanation:
+
+- `@InjectMocks`: This annotation injects the mocks or spy fields into the tested object.
+- `MockMvc`: It is a main entry point for server-side Spring MVC test support.
+- `setup()`: This method initializes the mock objects before running the tests.
+- `testHelloEndpoint()`: This method tests the `/hello` endpoint of the `SampleController`. It uses MockMvc to perform a GET request and checks if the response status is OK (200) and the content matches the expected string.
+
+### Integration Testing in Spring Boot:
+
+Integration testing in Spring Boot involves testing multiple units or components of your application together to ensure that they work correctly when integrated. This type of testing can include database interactions, HTTP requests, or interactions with other external systems.
+
+For integration testing, you can use Spring's testing support (`@SpringBootTest`, `@AutoConfigureMockMvc`, etc.) along with testing frameworks like JUnit or TestNG to test the application in a more realistic environment.
+
+Here's a basic example of an integration test using `@SpringBootTest`:
+
+```java
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.hamcrest.Matchers.equalTo;
+
+@SpringBootTest
+@AutoConfigureMockMvc
+public class SampleIntegrationTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void testHelloEndpoint() throws Exception {
+        mockMvc.perform(get("/hello"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(equalTo("Hello, World!")));
+    }
+}
+```
+
+This integration test uses `@SpringBootTest` to load the complete Spring application context and `@AutoConfigureMockMvc` to auto-configure the `MockMvc` instance.
+
+These testing methodologies help maintain the reliability and functionality of Spring Boot applications by ensuring that both individual units and the integrated components work as expected.
+
 
 
