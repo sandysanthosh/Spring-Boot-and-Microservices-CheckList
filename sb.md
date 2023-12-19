@@ -456,4 +456,93 @@ Certainly! Here's an example of how you might implement basic authentication and
 
 This example demonstrates a simple setup using in-memory authentication. In a production environment, you'd likely use more secure approaches such as database-based authentication or integrate with other authentication providers like LDAP, OAuth, or JWT for better security. Adjust the configurations and authentication mechanisms according to your application's specific requirements.
 
+### 6.1 In Spring Boot, exceptions are typically handled using the `@ControllerAdvice` annotation and implementing a global exception handler. This allows for centralized exception handling across multiple controllers in your application.
+
+Here's a step-by-step guide on implementing a custom exception handler in a Spring Boot application:
+
+1. **Create Custom Exception Classes:**
+   Define custom exception classes that extend from `RuntimeException` or its subclasses. For example:
+   
+   ```java
+   // Custom exception for handling not found scenarios
+   public class ResourceNotFoundException extends RuntimeException {
+       public ResourceNotFoundException(String message) {
+           super(message);
+       }
+   }
+
+   // Custom exception for handling other specific scenarios
+   public class CustomException extends RuntimeException {
+       public CustomException(String message) {
+           super(message);
+       }
+   }
+   ```
+
+2. **Create a Global Exception Handler:**
+   Create a class annotated with `@ControllerAdvice` to handle exceptions globally across the application. This class should have methods annotated with `@ExceptionHandler` to manage specific exceptions.
+
+   ```java
+   import org.springframework.http.HttpStatus;
+   import org.springframework.http.ResponseEntity;
+   import org.springframework.web.bind.annotation.ControllerAdvice;
+   import org.springframework.web.bind.annotation.ExceptionHandler;
+
+   @ControllerAdvice
+   public class GlobalExceptionHandler {
+
+       @ExceptionHandler(ResourceNotFoundException.class)
+       public ResponseEntity<String> handleResourceNotFoundException(ResourceNotFoundException ex) {
+           return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+       }
+
+       @ExceptionHandler(CustomException.class)
+       public ResponseEntity<String> handleCustomException(CustomException ex) {
+           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+       }
+
+       // Add more exception handlers for different custom exceptions as needed
+       
+       // Generic exception handler for other unhandled exceptions
+       @ExceptionHandler(Exception.class)
+       public ResponseEntity<String> handleException(Exception ex) {
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Something went wrong");
+       }
+   }
+   ```
+
+   This `GlobalExceptionHandler` class contains methods annotated with `@ExceptionHandler` for specific exceptions like `ResourceNotFoundException` and `CustomException`. It also has a generic handler for any other unhandled exceptions.
+
+3. **Throw Custom Exceptions in Your Controllers:**
+   In your controller classes, throw these custom exceptions when specific scenarios occur.
+
+   ```java
+   import org.springframework.web.bind.annotation.GetMapping;
+   import org.springframework.web.bind.annotation.PathVariable;
+   import org.springframework.web.bind.annotation.RestController;
+
+   @RestController
+   public class SampleController {
+
+       @GetMapping("/items/{id}")
+       public ResponseEntity<String> getItemById(@PathVariable Long id) {
+           // Assume logic to retrieve an item from a database
+           // If item not found, throw ResourceNotFoundException
+           if (itemNotFound) {
+               throw new ResourceNotFoundException("Item with ID " + id + " not found");
+           }
+           return ResponseEntity.ok("Item found");
+       }
+
+       @GetMapping("/customException")
+       public ResponseEntity<String> throwCustomException() {
+           // Logic to throw a custom exception
+           throw new CustomException("Custom exception occurred");
+       }
+   }
+   ```
+
+This setup will ensure that when a specific exception is thrown from your controller methods, it gets intercepted by the corresponding exception handler method in the `GlobalExceptionHandler` class, providing a consistent and controlled way to handle exceptions across your Spring Boot application.
+
+
 
