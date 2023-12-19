@@ -984,5 +984,63 @@ Example: `/products?page=0&size=20` retrieves the first page with 20 items per p
 
 This setup demonstrates a basic implementation of pagination in a Spring Boot application using Spring Data. You can further customize the pagination by adding sorting, filtering, or custom query methods in the repository as needed.
 
+### 13.1 Aspect-Oriented Programming (AOP) in Spring Boot allows you to modularize cross-cutting concerns in your application. Cross-cutting concerns are aspects of your application that affect multiple modules, such as logging, security, transaction management, and performance monitoring. AOP enables you to encapsulate these concerns and apply them declaratively to the application.
 
+Here's an overview of using AOP in a Spring Boot application:
 
+### 1. Dependency Configuration:
+
+Make sure you have the necessary dependencies in your `pom.xml` (if using Maven) or `build.gradle` (if using Gradle) file:
+
+For Maven:
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+```
+
+For Gradle:
+```groovy
+implementation 'org.springframework.boot:spring-boot-starter-aop'
+```
+
+### 2. Creating Aspects:
+
+An aspect is a class where you define cross-cutting concerns using advice (methods) that are executed at specific join points in your application. You can create an aspect using the `@Aspect` annotation.
+
+Example:
+```java
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @Before("execution(* com.example.myapp.service.*.*(..))")
+    public void beforeServiceMethods() {
+        System.out.println("Logging before service methods execution...");
+    }
+}
+```
+In this example:
+- `@Aspect` marks the class as an aspect.
+- `@Before` is advice that executes before the methods matching the specified pointcut expression (`execution(* com.example.myapp.service.*.*(..))`).
+
+### 3. Pointcut Expressions:
+
+Pointcut expressions define the join points where advice should be applied. They specify the methods or locations in the application where the aspect's advice should be executed.
+
+- `"execution(* com.example.myapp.service.*.*(..))"` is an example of a pointcut expression that matches all methods in classes within the `com.example.myapp.service` package.
+
+### 4. Using Aspects in Spring Boot Application:
+
+Aspects are applied automatically by Spring when the application starts up. You don't need to explicitly call them; Spring's AOP infrastructure handles the weaving of aspects into the application.
+
+### Notes:
+- AOP can be used for various purposes like logging, security, caching, transaction management, etc.
+- Aspects can have different advice types such as `@Before`, `@After`, `@Around`, `@AfterReturning`, `@AfterThrowing`, etc., defining different actions before, after, or around the join points.
+
+Ensure that the aspect classes are properly annotated (`@Aspect`) and are scanned by Spring component scanning in your Spring Boot application for AOP to work correctly.
